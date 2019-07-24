@@ -54,6 +54,8 @@ func (d *Decoder) readFrame() error {
 }
 
 // Read is io.Reader's Read.
+//
+// In some cases, this will result in an error that is not io.EOF, and can be retried.
 func (d *Decoder) Read(buf []byte) (int, error) {
 	for len(d.buf) == 0 {
 		if err := d.readFrame(); err != nil {
@@ -67,6 +69,8 @@ func (d *Decoder) Read(buf []byte) (int, error) {
 }
 
 // Seek is io.Seeker's Seek.
+//
+// In some cases, this will result in an error that is not io.EOF, and can be retried.
 //
 // Seek panics when the underlying source is not io.Seeker.
 func (d *Decoder) Seek(offset int64, whence int) (int64, error) {
