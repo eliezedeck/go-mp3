@@ -98,7 +98,12 @@ func (d *Decoder) Seek(offset int64, whence int) (int64, error) {
 		if err := d.readFrame(); err != nil {
 			return 0, err
 		}
-		d.buf = d.buf[consts.BytesPerFrame+(d.pos%consts.BytesPerFrame):]
+		offset := consts.BytesPerFrame + (d.pos % consts.BytesPerFrame)
+		if offset < int64(len(d.buf)) {
+			d.buf = d.buf[offset:]
+		} else {
+			d.buf = nil
+		}
 	} else {
 		if _, err := d.source.Seek(d.frameStarts[f], 0); err != nil {
 			return 0, err
