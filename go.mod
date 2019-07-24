@@ -1,3 +1,3 @@
-module github.com/hajimehoshi/go-mp3
+module github.com/eliezedeck/go-mp3
 
-require github.com/hajimehoshi/oto v0.3.4
+require github.com/eliezedeck/oto v0.3.4
